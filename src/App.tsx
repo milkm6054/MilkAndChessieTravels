@@ -461,9 +461,9 @@ function App() {
             />
             {pins.map((pin) => (
               <Marker
-                key={pin.id}
+                key={`${pin.id}-${pin.completed ? 'completed' : 'pending'}`}
                 position={[pin.lat, pin.lon]}
-                icon={pinIcon(pin.icon)}
+                icon={pinIcon(pin.icon, pin.completed || false)}
                 eventHandlers={{
                   click: () => {
                     setFocusedPinId(pin.id);
@@ -473,6 +473,22 @@ function App() {
                 <Popup>
                   <strong>{pin.name}</strong>
                   <div>{pin.notes || pin.sourceLabel}</div>
+                  <button
+                    style={{
+                      marginTop: "8px",
+                      padding: "4px 8px",
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                      border: "none",
+                      background: "#a78bfa",
+                      color: "white",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                    onClick={() => toggleComplete(pin.id)}
+                  >
+                    {pin.completed ? "Unmark visited" : "Mark as visited"}
+                  </button>
                 </Popup>
               </Marker>
             ))}
