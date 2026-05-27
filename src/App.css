@@ -16,7 +16,7 @@
 
 .trip-header,
 .trip-layout {
-  width: min(1240px, 100%);
+  width: min(1600px, 100%);
   margin: 0 auto;
 }
 
@@ -53,6 +53,8 @@
 @media (min-width: 1060px) {
   .trip-layout {
     grid-template-columns: minmax(340px, 390px) minmax(0, 1fr);
+    min-height: calc(100dvh - 150px);
+    align-items: stretch;
   }
 }
 
@@ -69,8 +71,14 @@
   display: grid;
   align-content: start;
   gap: 11px;
-  max-height: calc(100vh - 120px);
   overflow: auto;
+}
+
+@media (min-width: 1060px) {
+  .side-panel {
+    height: 100%;
+    max-height: none;
+  }
 }
 
 .search-card,
@@ -339,6 +347,13 @@
   gap: 10px;
 }
 
+@media (min-width: 1060px) {
+  .map-shell {
+    min-height: 0;
+    height: 100%;
+  }
+}
+
 .map-toolbar button {
   border: 1px solid #d5cdc2;
   padding: 9px 11px;
@@ -352,6 +367,7 @@
 }
 
 .map-canvas {
+  height: 100%;
   border-radius: 16px;
   border: 1px solid #ced7cf;
   overflow: hidden;
