@@ -1,9 +1,10 @@
-# UK Road Trip Project
+# Joe & Frankie's Adventures
 
 Shared road-trip planner for two people:
 - interactive UK map
 - search for places
 - add icon pins and notes
+- check off locations as you visit them
 - share by trip link
 - server-side persistence (JSON file)
 

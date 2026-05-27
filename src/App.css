@@ -1,14 +1,14 @@
 .trip-page {
-  --paper: #f6f6f0;
-  --ink: #212124;
-  --mint: #2f7f73;
-  --mint-deep: #1f5f56;
-  --peach: #ffb27d;
+  --paper: #faf7ff;
+  --ink: #3f1f54;
+  --purple: #a78bfa;
+  --purple-deep: #7c3aed;
+  --purple-light: #e9d5ff;
   min-height: 100vh;
   padding: 20px;
   background:
-    radial-gradient(circle at 8% -4%, #cfeee4 0%, transparent 35%),
-    radial-gradient(circle at 94% 0%, #ffe9d7 0%, transparent 30%),
+    radial-gradient(circle at 8% -4%, #e9d5ff 0%, transparent 35%),
+    radial-gradient(circle at 94% 0%, #ddd6fe 0%, transparent 30%),
     var(--paper);
   color: var(--ink);
 }
@@ -28,7 +28,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.74rem;
-  color: var(--mint-deep);
+  color: var(--purple-deep);
   font-weight: 700;
 }
 
@@ -134,7 +134,7 @@
 .search-row button,
 .add-button {
   border: 0;
-  background: var(--mint);
+  background: var(--purple);
   color: #fff;
   padding: 10px 12px;
   display: inline-flex;
@@ -189,8 +189,8 @@
 }
 
 .result-item.active {
-  border-color: var(--peach);
-  box-shadow: inset 0 0 0 1px var(--peach);
+  border-color: var(--purple);
+  box-shadow: inset 0 0 0 1px var(--purple);
 }
 
 .result-item strong,
@@ -251,8 +251,22 @@
 }
 
 .saved-item.active {
-  border-color: var(--mint);
-  box-shadow: inset 0 0 0 1px var(--mint);
+  border-color: var(--purple);
+  box-shadow: inset 0 0 0 1px var(--purple);
+}
+
+.saved-item.completed {
+  opacity: 0.65;
+}
+
+.complete-button {
+  border: 0;
+  background: transparent;
+  padding: 6px;
+  color: var(--purple-deep);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .saved-main {

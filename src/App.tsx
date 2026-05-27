@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { Compass, Copy, Plus, Search, Trash2 } from "lucide-react";
+import { CheckCircle2, Circle, Compass, Copy, Plus, Search, Trash2 } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
@@ -23,6 +23,7 @@ type TripPin = {
   lon: number;
   sourceLabel: string;
   createdAt?: string;
+  completed?: boolean;
 };
 
 const UK_CENTER: [number, number] = [54.5, -2.6];
@@ -52,10 +53,13 @@ function updateTripInUrl(tripId: string) {
   window.history.replaceState({}, "", url.toString());
 }
 
-function pinIcon(emoji: string) {
+function pinIcon(emoji: string, completed: boolean = false) {
+  const backgroundColor = completed ? "#d8b4fe" : "#ffd27f";
+  const borderColor = completed ? "#9333ea" : "#624730";
+  const opacity = completed ? "0.7" : "1";
   return L.divIcon({
     className: "emoji-pin",
-    html: `<div class="pin-bubble">${emoji}</div>`,
+    html: `<div class="pin-bubble" style="background-color: ${backgroundColor}; border-color: ${borderColor}; opacity: ${opacity};">${emoji}</div>`,
     iconSize: [32, 32],
     iconAnchor: [16, 16],
   });
@@ -246,6 +250,30 @@ function App() {
     }
   }
 
+  async function toggleComplete(id: string) {
+    const pin = pins.find((p) => p.id === id);
+    if (!pin) return;
+
+    try {
+      const response = await fetch(`${API_BASE}/api/trips/${encodeURIComponent(tripId)}/pins/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ completed: !pin.completed }),
+      });
+
+      if (!response.ok) {
+        throw new Error(String(response.status));
+      }
+
+      setPins((current) =>
+        current.map((p) => (p.id === id ? { ...p, completed: !p.completed } : p))
+      );
+      setSyncMessage(pin.completed ? "Unmarked location" : "Great job! Marked as visited");
+    } catch {
+      setSyncMessage("Could not update. Check server connection.");
+    }
+  }
+
   function openTrip() {
     const nextTrip = normalizeTripId(tripInput);
     setTripInput(nextTrip);
@@ -271,9 +299,9 @@ function App() {
   return (
     <main className="trip-page">
       <header className="trip-header">
-        <p className="kicker">Road Trip Ideas</p>
-        <h1>UK map for you two</h1>
-        <p>Search places, pick an icon, and build your own shared travel map.</p>
+        <p className="kicker">Road Trip</p>
+        <h1>Joe & Frankie's Adventures</h1>
+        <p>Search places, pick an icon, and check them off when you go.</p>
       </header>
 
       <section className="trip-layout">
@@ -377,7 +405,19 @@ function App() {
             </div>
             {isLoadingPins ? <p className="sync-text">Loading locations...</p> : null}
             {pins.map((pin) => (
-              <div className={`saved-item ${pin.id === focusedPinId ? "active" : ""}`} key={pin.id}>
+              <div className={`saved-item ${pin.id === focusedPinId ? "active" : ""} ${pin.completed ? "completed" : ""}`} key={pin.id}>
+                <button
+                  type="button"
+                  className="complete-button"
+                  onClick={() => toggleComplete(pin.id)}
+                  aria-label={pin.completed ? "Mark as unvisited" : "Mark as visited"}
+                >
+                  {pin.completed ? (
+                    <CheckCircle2 size={18} />
+                  ) : (
+                    <Circle size={18} />
+                  )}
+                </button>
                 <button
                   type="button"
                   className="saved-main"

@@ -117,6 +117,23 @@ app.delete("/api/trips/:tripId/pins/:pinId", async (req, res) => {
   res.json({ tripId, pins: next });
 });
 
+app.patch("/api/trips/:tripId/pins/:pinId", async (req, res) => {
+  const tripId = normalizeTripId(req.params.tripId);
+  const pinId = String(req.params.pinId || "");
+  const completed = req.body?.completed ?? false;
+
+  const store = await readStore();
+  const current = Array.isArray(store[tripId]) ? store[tripId] : [];
+  const updated = current.map((pin) =>
+    pin.id === pinId ? { ...pin, completed: Boolean(completed) } : pin
+  );
+
+  store[tripId] = updated;
+  await writeStore(store);
+  const updatedPin = updated.find((p) => p.id === pinId);
+  res.json({ tripId, pin: updatedPin });
+});
+
 app.use(express.static(distDir));
 
 app.use(async (req, res, next) => {
