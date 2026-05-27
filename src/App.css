@@ -263,10 +263,14 @@
   border: 0;
   background: transparent;
   padding: 6px;
-  color: var(--purple-deep);
+  color: #16a34a;
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+.saved-item.completed .complete-button {
+  color: #22c55e;
 }
 
 .saved-main {
@@ -287,8 +291,13 @@
   display: grid;
   place-items: center;
   border-radius: 999px;
-  background: #fff6db;
-  border: 1px solid #edd6a9;
+  background: #ffd27f;
+  border: 1px solid #daa520;
+}
+
+.saved-item.completed .saved-icon {
+  background: #86efac;
+  border-color: #16a34a;
 }
 
 .saved-main strong,

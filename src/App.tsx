@@ -30,7 +30,7 @@ const UK_CENTER: [number, number] = [54.5, -2.6];
 const DEFAULT_ZOOM = 6;
 const API_BASE = import.meta.env.VITE_API_BASE || "";
 
-const iconChoices = ["📸", "🏖️", "🥾", "🍽️", "☕", "🏰", "✨"];
+const iconChoices = ["🏖️", "⭐", "🥾", "🏰", "🌲"];
 
 function normalizeTripId(value: string) {
   const clean = value
@@ -54,9 +54,9 @@ function updateTripInUrl(tripId: string) {
 }
 
 function pinIcon(emoji: string, completed: boolean = false) {
-  const backgroundColor = completed ? "#d8b4fe" : "#ffd27f";
-  const borderColor = completed ? "#9333ea" : "#624730";
-  const opacity = completed ? "0.7" : "1";
+  const backgroundColor = completed ? "#86efac" : "#ffd27f";
+  const borderColor = completed ? "#16a34a" : "#624730";
+  const opacity = completed ? "1" : "1";
   return L.divIcon({
     className: "emoji-pin",
     html: `<div class="pin-bubble" style="background-color: ${backgroundColor}; border-color: ${borderColor}; opacity: ${opacity};">${emoji}</div>`,
