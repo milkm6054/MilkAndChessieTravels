@@ -11,6 +11,7 @@
     radial-gradient(circle at 94% 0%, #ddd6fe 0%, transparent 30%),
     var(--paper);
   color: var(--ink);
+  /* Persistence test v1 */
 }
 
 .trip-header,
