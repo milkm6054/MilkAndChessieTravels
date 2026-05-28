@@ -403,6 +403,7 @@ function App() {
               <h2>Saved ideas</h2>
               <span>{pins.length}</span>
             </div>
+            <div className="saved-list">
             {isLoadingPins ? <p className="sync-text">Loading locations...</p> : null}
             {pins.map((pin) => (
               <div className={`saved-item ${pin.id === focusedPinId ? "active" : ""} ${pin.completed ? "completed" : ""}`} key={pin.id}>
@@ -444,6 +445,7 @@ function App() {
                 </button>
               </div>
             ))}
+            </div>
           </div>
         </aside>
 
